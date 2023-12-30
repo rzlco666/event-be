@@ -1,4 +1,5 @@
 const Images = require('../../api/v1/images/model');
+const { NotFoundError } = require('../../errors/index')
 
 const generateUrlImage = async (req) => {
     const result = `uploads/${req.file.filename}`;
