@@ -92,7 +92,7 @@ const getOneEvents = async (req) => {
         });
 
     if (!result)
-        throw new NotFoundError(`Tidak ada pembicara dengan id :  ${id}`);
+        throw new NotFoundError(`Tidak ada acara dengan id :  ${id}`);
 
     return result;
 };
@@ -116,6 +116,12 @@ const updateEvents = async (req) => {
     await checkingImage(image);
     await checkingCategories(category);
     await checkingTalents(talent);
+
+    const checkEvent = await Events.findOne({
+        _id: id,
+    });
+
+    if (!checkEvent) throw new NotFoundError(`Tidak ada acara dengan id :  ${id}`);
 
     const check = await Events.findOne({
         title,
@@ -142,8 +148,6 @@ const updateEvents = async (req) => {
         { new: true, runValidators: true }
     );
 
-    if (!result) throw new NotFoundError(`Tidak ada acara dengan id :  ${id}`);
-
     return result;
 };
 
@@ -152,7 +156,7 @@ const deleteEvents = async (req) => {
 
     const result = await Events.findByIdAndDelete(id);
 
-    if (!result) throw new NotFoundError(`Tidak ada pembicara dengan id :  ${id}`);
+    if (!result) throw new NotFoundError(`Tidak ada acara dengan id :  ${id}`);
 
     return result;
 };
